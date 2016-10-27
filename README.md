@@ -11,4 +11,6 @@ Download the binary for your OS from [releases](https://github.com/Checksum/gosh
 
 ## Usage
 
-`gosh -help` for available options.
+`gosh` serves the current directory on port `8000`. By default, it doesn't watch for changes. To watch for changes, use `gosh -watch -ext="html,css,js"`.  
+
+`gosh -help` lists all available options.
