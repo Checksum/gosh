@@ -3,3 +3,4 @@ vendor
 excludes
 glide.lock
 gosh
+dist
