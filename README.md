@@ -7,8 +7,8 @@ Needed a single binary which I can use on remote servers without having to insta
 
 ## Installation
 
-Download the binary for your OS from [https://github.com/Checksum/gosh/releases](releases)
+Download the binary for your OS from [releases](https://github.com/Checksum/gosh/releases). Put it in some path where it's accessible.
 
 ## Usage
 
-`gosh -help` for available options
+`gosh -help` for available options.
