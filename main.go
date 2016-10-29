@@ -7,22 +7,29 @@ import (
 	"os"
 
 	"github.com/Checksum/gosh/handlers"
-	"github.com/Zillode/notify"
+	"github.com/toqueteos/webbrowser"
 
+	"github.com/Zillode/notify"
 	gorilla "github.com/gorilla/handlers"
+	"github.com/pkg/profile"
 	"github.com/zenazn/goji/web/middleware"
 )
 
 func main() {
 	var port, dir, ext string
-	var noCache, watch bool
+	var noCache, watch, cpuprofile bool
 
 	flag.StringVar(&port, "port", "8000", "The port to bind to")
 	flag.StringVar(&dir, "dir", ".", "The directory to serve")
 	flag.BoolVar(&noCache, "no-cache", false, "Disable HTTP caching")
 	flag.BoolVar(&watch, "watch", false, "Reload browser on file change")
 	flag.StringVar(&ext, "ext", "js,css,html", "Comma separated file extensions to watch for change")
+	flag.BoolVar(&cpuprofile, "cpuprofile", false, "Record profile for debugging")
 	flag.Parse()
+
+	if cpuprofile {
+		defer profile.Start().Stop()
+	}
 
 	mux := http.NewServeMux()
 	handler := gorilla.LoggingHandler(os.Stdout, http.FileServer(http.Dir(dir)))
@@ -49,6 +56,7 @@ func main() {
 	// Handle all other paths
 	mux.Handle("/", handler)
 
+	webbrowser.Open("http://localhost:" + port)
 	log.Printf("Serving %s on port %s", dir, port)
-	log.Fatal(http.ListenAndServe(":"+port, mux))
+	log.Fatal(http.ListenAndServe("localhost:"+port, mux))
 }

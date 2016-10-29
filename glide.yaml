@@ -14,3 +14,7 @@ import:
   subpackages:
   - assert
 - package: github.com/jarcoal/httpmock
+- package: github.com/pkg/profile
+  version: ^1.2.0
+- package: github.com/toqueteos/webbrowser
+  version: ^1.0.0
