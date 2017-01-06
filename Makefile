@@ -5,7 +5,7 @@ install:
 
 release:
 	@echo "Building release"
-	@gox -ldflags "-s -w" -osarch="darwin/amd64 linux/amd64 windows/amd64" -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
+	@gox -ldflags "-s -w" -os="linux darwin windows openbsd" -arch="amd64 386" -output "dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
 	@echo "Done"
 
 .PHONY: install release
