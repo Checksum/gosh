@@ -17,12 +17,14 @@ import (
 
 func main() {
 	var port, dir, ext string
-	var noCache, watch, cpuprofile bool
+	var noCache, watch, openBrowser, spa, cpuprofile bool
 
 	flag.StringVar(&port, "port", "8000", "The port to bind to")
 	flag.StringVar(&dir, "dir", ".", "The directory to serve")
-	flag.BoolVar(&noCache, "no-cache", false, "Disable HTTP caching")
+	flag.BoolVar(&noCache, "no-cache", true, "Disable HTTP caching")
 	flag.BoolVar(&watch, "watch", false, "Reload browser on file change")
+	flag.BoolVar(&openBrowser, "open", true, "Open a browser to serve the page")
+	flag.BoolVar(&spa, "spa", true, "Serve a single page application. All unmatched routes are forwarded to index.html")
 	flag.StringVar(&ext, "ext", "js,css,html", "Comma separated file extensions to watch for change")
 	flag.BoolVar(&cpuprofile, "cpuprofile", false, "Record profile for debugging")
 	flag.Parse()
@@ -53,10 +55,16 @@ func main() {
 		log.Println("Watching for changes..")
 	}
 
+	if spa {
+		handler = handlers.NewFileServer(handler)
+	}
+
 	// Handle all other paths
 	mux.Handle("/", handler)
 
-	webbrowser.Open("http://localhost:" + port)
+	if openBrowser {
+		webbrowser.Open("http://localhost:" + port)
+	}
 	log.Printf("Serving %s on port %s", dir, port)
 	log.Fatal(http.ListenAndServe("localhost:"+port, mux))
 }
