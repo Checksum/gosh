@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Zillode/notify"
+	"github.com/Checksum/notify"
 )
 
 // FileWatcher recursively watches the served directory for changes

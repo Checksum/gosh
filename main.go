@@ -7,11 +7,10 @@ import (
 	"os"
 
 	"github.com/Checksum/gosh/handlers"
-	"github.com/toqueteos/webbrowser"
-
-	"github.com/Zillode/notify"
+	"github.com/Checksum/notify"
 	gorilla "github.com/gorilla/handlers"
 	"github.com/pkg/profile"
+	"github.com/toqueteos/webbrowser"
 	"github.com/zenazn/goji/web/middleware"
 )
 
@@ -22,9 +21,9 @@ func main() {
 	flag.StringVar(&port, "port", "8000", "The port to bind to")
 	flag.StringVar(&dir, "dir", ".", "The directory to serve")
 	flag.BoolVar(&noCache, "no-cache", true, "Disable HTTP caching")
-	flag.BoolVar(&watch, "watch", false, "Reload browser on file change")
-	flag.BoolVar(&openBrowser, "open", true, "Open a browser to serve the page")
-	flag.BoolVar(&spa, "spa", true, "Serve a single page application. All unmatched routes are forwarded to index.html")
+	flag.BoolVar(&watch, "watch", true, "Reload browser on file change")
+	flag.BoolVar(&openBrowser, "open", false, "Open a browser to serve the page")
+	flag.BoolVar(&spa, "spa", false, "Serve a single page application. All unmatched routes are forwarded to index.html")
 	flag.StringVar(&ext, "ext", "js,css,html", "Comma separated file extensions to watch for change")
 	flag.BoolVar(&cpuprofile, "cpuprofile", false, "Record profile for debugging")
 	flag.Parse()
