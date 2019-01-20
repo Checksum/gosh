@@ -36,7 +36,7 @@ func NewFileWatcher(dir, ext string, h http.Handler) *FileWatcher {
 		for {
 			select {
 			case event := <-c:
-				ext := filepath.Ext(event.Path())[1:]
+				ext := filepath.Ext(event.Path())
 				if fw.isValidExt(ext) {
 					log.Println("File changed, reloading")
 					b.Messages <- "reload:" + event.Path()
@@ -50,9 +50,12 @@ func NewFileWatcher(dir, ext string, h http.Handler) *FileWatcher {
 }
 
 func (fw *FileWatcher) isValidExt(ext string) bool {
-	for _, val := range fw.Extensions {
-		if val == ext {
-			return true
+	if ext != "" && len(ext) > 1 {
+		ext = ext[1:]
+		for _, val := range fw.Extensions {
+			if val == ext {
+				return true
+			}
 		}
 	}
 	return false
